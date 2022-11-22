@@ -1,0 +1,21 @@
+plugins {
+    id 'java-library'
+}
+
+dependencies {
+    // implementation - csak ebben a modulban működik
+    // api - ott is működik ahova behúztuk implementation-nal (ehhez 'java-library' plugin kell)
+    api 'com.google.guava:guava:31.1-jre'
+
+}
+
+// libary esetén használni kell
+jar.enabled = true
+
+
+/*
+// Spring esetén a kettő közül egy egyik kell ha csak libary
+bootJar.enabled = false
+bootJar {
+    enabled = false
+}*/

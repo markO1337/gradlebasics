@@ -1,0 +1,52 @@
+plugins {
+    id 'java'
+    //id 'org.springframework.boot' version '2.7.5'
+    //id 'io.spring.dependency-management' version '1.0.15.RELEASE'
+}
+
+/*project ("sub-project-1") {
+    apply plugin: 'java'
+
+    task('hello').doLast {
+        println "I'm $project.name"
+    }
+}*/
+
+subprojects {
+    apply plugin: 'java'
+    //apply plugin: 'org.springframework.boot'
+}
+
+allprojects {
+    task('hello').doLast {
+        println "I'm $project.name"
+    }
+
+    apply from: "$rootProject.projectDir/dependencies.gradle"
+
+    group = 'com.markbus'
+    version = '1.0'
+    sourceCompatibility = '17'
+
+    configurations {
+        compileOnly.extendsFrom annotationProcessor
+        testCompileOnly.extendsFrom annotationProcessor
+        testAnnotationProcessor.extendsFrom annotationProcessor
+    }
+
+    repositories {
+        mavenLocal()
+        mavenCentral()
+    }
+
+    dependencies {
+        testImplementation libsTest.jupiterApi
+        testImplementation libsTest.jupiterEngine
+
+        annotationProcessor "org.projectlombok:lombok:1.18.24"
+    }
+
+    test {
+        useJUnitPlatform()
+    }
+}
